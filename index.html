@@ -474,31 +474,33 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 猫咪爱心排列（优化后的位置）
+        // 猫咪爱心排列（18只猫咪完美爱心）
         const catsContainer = document.getElementById('catsContainer');
         const catPositions = [
-            { left: '20%', top: '8%' },
-            { left: '28%', top: '4%' },
-            { left: '37%', top: '2%' },
-            { left: '45%', top: '1%' },
-            { left: '55%', top: '1%' },
-            { left: '63%', top: '2%' },
-            { left: '72%', top: '4%' },
-            { left: '80%', top: '8%' },
-            { left: '50%', top: '6%' },
-            { left: '15%', top: '20%' },
-            { left: '12%', top: '35%' },
-            { left: '15%', top: '50%' },
-            { left: '85%', top: '20%' },
-            { left: '88%', top: '35%' },
-            { left: '85%', top: '50%' },
-            { left: '25%', top: '65%' },
-            { left: '35%', top: '75%' },
-            { left: '43%', top: '85%' },
-            { left: '50%', top: '90%' },
-            { left: '57%', top: '85%' },
-            { left: '65%', top: '75%' },
-            { left: '75%', top: '65%' }
+            // 顶部弧线（左到右）
+            { left: '20%', top: '10%' },
+            { left: '30%', top: '5%' },
+            { left: '40%', top: '3%' },
+            { left: '50%', top: '2%' },
+            { left: '60%', top: '3%' },
+            { left: '70%', top: '5%' },
+            { left: '80%', top: '10%' },
+            // 左侧弧线
+            { left: '12%', top: '25%' },
+            { left: '8%', top: '40%' },
+            { left: '12%', top: '55%' },
+            // 右侧弧线
+            { left: '88%', top: '25%' },
+            { left: '92%', top: '40%' },
+            { left: '88%', top: '55%' },
+            // 底部尖角
+            { left: '22%', top: '70%' },
+            { left: '35%', top: '80%' },
+            { left: '43%', top: '88%' },
+            { left: '50%', top: '92%' },
+            { left: '57%', top: '88%' },
+            { left: '65%', top: '80%' },
+            { left: '78%', top: '70%' }
         ];
         
         for (let i = 1; i <= 18; i++) {
