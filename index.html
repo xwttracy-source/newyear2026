@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>2026新年烟花 🎆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            background: linear-gradient(180deg, #0a0e27 0%, #1a1f3a 50%, #2a2f4a 100%);
+            color: white;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        #canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        
+        .container {
+            position: relative;
+            z-index: 2;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .year-transition {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .year {
+            font-size: 6rem;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        
+        .year-2025 {
+            color: #888;
+            text-shadow: 0 0 10px rgba(136, 136, 136, 0.5);
+        }
+        
+        .arrow {
+            font-size: 4rem;
+            color: #FFD700;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+        
+        .year-2026 {
+            color: #FFD700;
+            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+        }
+        
+        .cats {
+            display: flex;
+            gap: 30px;
+            margin: 30px 0;
+        }
+        
+        .cat-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #FFD700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .cat-img:nth-child(2) {
+            animation-delay: 1.5s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        .blessing {
+            font-size: 1.5rem;
+            color: #FFD700;
+            margin: 20px 0;
+            text-align: center;
+        }
+        
+        .scroll-text {
+            font-size: 1.2rem;
+            color: #FFD700;
+            white-space: nowrap;
+            overflow: hidden;
+            width: 100%;
+            max-width: 600px;
+            border: 2px solid #FFD700;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 20px 0;
+            position: relative;
+        }
+        
+        .scroll-content {
+            display: inline-block;
+            padding-left: 100%;
+            animation: scroll 30s linear infinite;
+        }
+        
+        @keyframes scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .countdown {
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .countdown-title {
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 20px;
+        }
+        
+        .countdown-time {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #FFD700;
+        }
+        
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .time-value {
+            font-size: 4rem;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+        }
+        
+        .time-label {
+            font-size: 1rem;
+            margin-top: 5px;
+        }
+        
+        .hint {
+            font-size: 1.2rem;
+            color: #FFD700;
+            text-align: center;
+            margin-top: 30px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        
+        @media (max-width: 768px) {
+            .year { font-size: 4rem; }
+            .arrow { font-size: 3rem; }
+            .cat-img { width: 100px; height: 100px; }
+            .blessing { font-size: 1.2rem; }
+            .scroll-text { font-size: 1rem; }
+            .countdown-title { font-size: 1.5rem; }
+            .time-value { font-size: 2.5rem; }
+        }
+    </style>
+</head>
+<body>
+    <canvas id="canvas"></canvas>
+    
+    <div class="container" onclick="createFirework(event)">
+        <div class="year-transition">
+            <div class="year year-2025">2025</div>
+            <div class="arrow">↓</div>
+            <div class="year year-2026">2026</div>
+        </div>
+        
+        <div class="cats">
+            <img src="cat1.jpg" alt="猫咪1" class="cat-img">
+            <img src="cat2.jpg" alt="猫咪2" class="cat-img">
+        </div>
+        
+        <div class="blessing">大猫携犬子们祝您：</div>
+        
+        <div class="scroll-text">
+            <div class="scroll-content">
+                新年快乐 🎊 · 万事如意 ✨ · 恭喜发财 💰 · 心想事成 🌟 · 阖家欢乐 🏮 · 步步高升 🎯 · 身体健康 💪 · 工作顺利 📈 · 学业进步 📚 · 财源广进 💵 · 福星高照 ⭐ · 吉祥如意 🎐 · 龙马精神 🐉 · 前程似锦 🌈 · 事业有成 🏆 · 平安喜乐 🕊️ · 笑口常开 😄 · 好运连连 🍀 · 幸福美满 💝 · 岁岁平安 🎋
+            </div>
+        </div>
+        
+        <div class="countdown">
+            <div class="countdown-title">离2026年还有</div>
+            <div class="countdown-time" id="countdown">
+                <div class="time-unit">
+                    <div class="time-value" id="days">0</div>
+                    <div class="time-label">天</div>
+                </div>
+                <div>:</div>
+                <div class="time-unit">
+                    <div class="time-value" id="hours">00</div>
+                    <div class="time-label">时</div>
+                </div>
+                <div>:</div>
+                <div class="time-unit">
+                    <div class="time-value" id="minutes">00</div>
+                    <div class="time-label">分</div>
+                </div>
+                <div>:</div>
+                <div class="time-unit">
+                    <div class="time-value" id="seconds">00</div>
+                    <div class="time-label">秒</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="hint">点击屏幕放烟花 🎆</div>
+    </div>
+    
+    <script>
+        // Canvas设置
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        // 烟花数组
+        const fireworks = [];
+        
+        // 烟花颜色
+        const colors = ['#FF6B6B', '#FFA500', '#FFD700', '#90EE90', '#87CEEB', '#DDA0DD', '#FF69B4', '#00CED1'];
+        
+        // 粒子类
+        class Particle {
+            constructor(x, y, color) {
+                this.x = x;
+                this.y = y;
+                this.color = color;
+                const angle = Math.random() * Math.PI * 2;
+                const speed = Math.random() * 8 + 4;
+                this.vx = Math.cos(angle) * speed;
+                this.vy = Math.sin(angle) * speed;
+                this.life = 1;
+                this.decay = Math.random() * 0.01 + 0.005;
+                this.size = Math.random() * 6 + 4;
+            }
+            
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
+                this.vy += 0.08;
+                this.life -= this.decay;
+            }
+            
+            draw() {
+                ctx.save();
+                ctx.globalAlpha = this.life;
+                ctx.fillStyle = this.color;
+                ctx.shadowBlur = 30;
+                ctx.shadowColor = this.color;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+                ctx.restore();
+            }
+        }
+        
+        // 创建烟花
+        function createFirework(e) {
+            const x = e.clientX || e.touches?.[0]?.clientX || Math.random() * canvas.width;
+            const y = e.clientY || e.touches?.[0]?.clientY || Math.random() * canvas.height;
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            
+            for (let i = 0; i < 60; i++) {
+                fireworks.push(new Particle(x, y, color));
+            }
+        }
+        
+        // 动画循环
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let i = fireworks.length - 1; i >= 0; i--) {
+                fireworks[i].update();
+                fireworks[i].draw();
+                
+                if (fireworks[i].life <= 0) {
+                    fireworks.splice(i, 1);
+                }
+            }
+            
+            requestAnimationFrame(animate);
+        }
+        
+        animate();
+        
+        // 倒计时
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const target = new Date('2026-01-01T00:00:00+08:00').getTime();
+            const distance = target - now;
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="time-value">🎉 新年快乐！🎉</div>';
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days;
+            document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+            document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+            document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+        }
+        
+        // 启动倒计时
+        updateCountdown();
+        setInterval(updateCountdown, 1000);
+        
+        // 触摸支持
+        document.addEventListener('touchstart', createFirework);
+    </script>
+</body>
+</html>
