@@ -79,6 +79,27 @@
             height: 550px;
         }
         
+        .owner-img {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center;
+            border: 6px solid #FFD700;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            z-index: 5;
+            animation: glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 1); }
+        }
+        
         .cat-img {
             position: absolute;
             width: 90px;
@@ -293,6 +314,7 @@
         </div>
         
         <div class="cats">
+        <img src="owner.jpg" alt="主人" class="owner-img">
             <img src="cat1.jpg" alt="猫咪1" class="cat-img">
             <img src="cat2.jpg" alt="猫咪2" class="cat-img">
             <img src="cat3.jpg" alt="猫咪3" class="cat-img">
