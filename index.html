@@ -474,49 +474,28 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 猫咪爱心排列（照片可重复使用，形成完美爱心形状）
+        // 使用心形曲线数学公式生成完美爱心坐标
         const catsContainer = document.getElementById('catsContainer');
-        const catPositions = [
-            // 左上圆弧（爱心左半边）- 8个位置
-            { left: '32%', top: '5%' },   // 左弧顶点
-            { left: '28%', top: '7%' },
-            { left: '23%', top: '10%' },
-            { left: '18%', top: '14%' },
-            { left: '14%', top: '20%' },
-            { left: '11%', top: '28%' },
-            { left: '9%', top: '36%' },
-            { left: '8%', top: '44%' },   // 左侧最宽点
+        const catPositions = [];
+        
+        // 心形曲线公式: x = 16*sin^3(t), y = 13*cos(t) - 5*cos(2t) - 2*cos(3t) - cos(4t)
+        const numCats = 30;  // 生成30个位置
+        for (let i = 0; i < numCats; i++) {
+            const t = (i / numCats) * Math.PI * 2;  // 角度从0到2π
             
-            // 右上圆弧（爱心右半边）- 8个位置
-            { left: '68%', top: '5%' },   // 右弧顶点
-            { left: '72%', top: '7%' },
-            { left: '77%', top: '10%' },
-            { left: '82%', top: '14%' },
-            { left: '86%', top: '20%' },
-            { left: '89%', top: '28%' },
-            { left: '91%', top: '36%' },
-            { left: '92%', top: '44%' },  // 右侧最宽点
+            // 计算心形曲线坐标
+            const x = 16 * Math.pow(Math.sin(t), 3);
+            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
             
-            // 左侧向下收拢 - 5个位置
-            { left: '10%', top: '52%' },
-            { left: '14%', top: '60%' },
-            { left: '20%', top: '68%' },
-            { left: '27%', top: '76%' },
-            { left: '35%', top: '83%' },
+            // 转换为百分比坐标（居中并缩放）
+            const left = 50 + x * 2.2;  // 以50%为中心，缩放2.2倍
+            const top = 50 + y * 2.2;   // 以50%为中心，缩放2.2倍
             
-            // 右侧向下收拢 - 5个位置
-            { left: '90%', top: '52%' },
-            { left: '86%', top: '60%' },
-            { left: '80%', top: '68%' },
-            { left: '73%', top: '76%' },
-            { left: '65%', top: '83%' },
-            
-            // 底部尖角 - 4个位置
-            { left: '43%', top: '88%' },
-            { left: '48%', top: '92%' },
-            { left: '52%', top: '92%' },
-            { left: '57%', top: '88%' }
-        ];
+            catPositions.push({
+                left: `${left}%`,
+                top: `${top}%`
+            });
+        }
         
         // 使用18张照片循环填充30个位置
         for (let i = 0; i < catPositions.length; i++) {
