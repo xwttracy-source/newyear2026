@@ -74,23 +74,40 @@
         
         .cats {
             display: flex;
-            gap: 30px;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
             margin: 30px 0;
+            max-width: 900px;
         }
         
         .cat-img {
-            width: 150px;
-            height: 150px;
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
             object-fit: cover;
             border: 4px solid #FFD700;
             box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
             animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s;
         }
         
-        .cat-img:nth-child(2) {
-            animation-delay: 1.5s;
+        .cat-img:hover {
+            transform: scale(1.2) !important;
+            z-index: 10;
         }
+        
+        .cat-img:nth-child(2) { animation-delay: 0.3s; }
+        .cat-img:nth-child(3) { animation-delay: 0.6s; }
+        .cat-img:nth-child(4) { animation-delay: 0.9s; }
+        .cat-img:nth-child(5) { animation-delay: 1.2s; }
+        .cat-img:nth-child(6) { animation-delay: 1.5s; }
+        .cat-img:nth-child(7) { animation-delay: 1.8s; }
+        .cat-img:nth-child(8) { animation-delay: 2.1s; }
+        .cat-img:nth-child(9) { animation-delay: 2.4s; }
+        .cat-img:nth-child(10) { animation-delay: 2.7s; }
+        .cat-img:nth-child(11) { animation-delay: 3.0s; }
+        .cat-img:nth-child(12) { animation-delay: 3.3s; }
         
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
@@ -223,7 +240,8 @@
         @media (max-width: 768px) {
             .year { font-size: 4rem; }
             .arrow { font-size: 3rem; }
-            .cat-img { width: 100px; height: 100px; }
+            .cats { gap: 15px; max-width: 100%; }
+            .cat-img { width: 80px; height: 80px; }
             .blessing { font-size: 1.2rem; }
             .scroll-text { font-size: 1rem; }
             .countdown-title { font-size: 1.5rem; }
@@ -254,6 +272,16 @@
         <div class="cats">
             <img src="cat1.jpg" alt="猫咪1" class="cat-img">
             <img src="cat2.jpg" alt="猫咪2" class="cat-img">
+            <img src="cat3.jpg" alt="猫咪3" class="cat-img">
+            <img src="cat4.jpg" alt="猫咪4" class="cat-img">
+            <img src="cat5.jpg" alt="猫咪5" class="cat-img">
+            <img src="cat6.jpg" alt="猫咪6" class="cat-img">
+            <img src="cat7.jpg" alt="猫咪7" class="cat-img">
+            <img src="cat8.jpg" alt="猫咪8" class="cat-img">
+            <img src="cat9.jpg" alt="猫咪9" class="cat-img">
+            <img src="cat10.jpg" alt="猫咪10" class="cat-img">
+            <img src="cat11.jpg" alt="猫咪11" class="cat-img">
+            <img src="cat12.jpg" alt="猫咪12" class="cat-img">
         </div>
         
         <div class="blessing">大猫携犬子们祝您：</div>
