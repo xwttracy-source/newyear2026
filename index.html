@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>2026新年烟花 🎆</title>
     <style>
         * {
@@ -36,8 +36,59 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
             padding: 20px;
+            padding-top: 60px;
+        }
+        
+        /* 音乐控制按钮 */
+        #musicControl {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 215, 0, 0.3);
+            border: 2px solid gold;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 1000;
+            font-size: 24px;
+            transition: all 0.3s;
+        }
+        
+        #musicControl:hover {
+            background: rgba(255, 215, 0, 0.5);
+            transform: scale(1.1);
+        }
+        
+        #musicControl.playing {
+            animation: rotate 3s linear infinite;
+        }
+        
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        /* 音乐加载提示 */
+        #musicStatus {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.8);
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        #musicStatus.show {
+            opacity: 1;
         }
         
         .year-transition {
@@ -46,321 +97,226 @@
         }
         
         .year {
-            font-size: 6rem;
+            font-size: clamp(3rem, 15vw, 6rem);
             font-weight: bold;
-            margin: 20px 0;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
         }
         
-        .year-2025 {
+        .year.old {
             color: #888;
-            text-shadow: 0 0 10px rgba(136, 136, 136, 0.5);
         }
         
-        .arrow {
-            font-size: 4rem;
-            color: #FFD700;
-            animation: bounce 2s infinite;
-        }
-        
-        @keyframes bounce {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(20px); }
-        }
-        
-        .year-2026 {
-            color: #FFD700;
-            text-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-        }
-        
-        .cats {
-            position: relative;
-            margin: 50px auto;
-            width: 600px;
-            height: 550px;
-        }
-        
-        .owner-img {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            width: 150px;
-            height: 150px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center;
-            border: 6px solid #FFD700;
-            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
-            z-index: 5;
+        .year.new {
+            color: #ffd700;
             animation: glow 2s ease-in-out infinite;
         }
         
         @keyframes glow {
-            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
-            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 1); }
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 215, 0, 0.5); }
+            50% { text-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
         }
         
-        .cat-img {
-            position: absolute;
-            width: 90px;
-            height: 90px;
-            border-radius: 50%;
-            object-fit: cover;
-            object-position: center 30%;
-            border: 4px solid #FFD700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
-            animation: float 3s ease-in-out infinite;
-            transition: transform 0.3s;
-        }
-        
-        .cat-img:hover {
-            transform: scale(1.2) !important;
-            z-index: 10;
-        }
-        
-        /* 标准爱心形状排列 ❤️ */
-        /* 左上圆弧 - 形成爱心左半圆 */
-        .cat-img:nth-child(2) { left: 180px; top: 20px; animation-delay: 0s; }
-        .cat-img:nth-child(3) { left: 110px; top: 50px; animation-delay: 0.3s; }
-        .cat-img:nth-child(4) { left: 60px; top: 100px; animation-delay: 0.6s; }
-        .cat-img:nth-child(5) { left: 35px; top: 170px; animation-delay: 0.9s; }
-        
-        /* 右上圆弧 - 形成爱心右半圆 */
-        .cat-img:nth-child(6) { left: 330px; top: 20px; animation-delay: 1.2s; }
-        .cat-img:nth-child(7) { left: 400px; top: 50px; animation-delay: 1.5s; }
-        .cat-img:nth-child(8) { left: 450px; top: 100px; animation-delay: 1.8s; }
-        .cat-img:nth-child(9) { left: 475px; top: 170px; animation-delay: 2.1s; }
-        
-        /* 中间凹陷 - 爱心顶部凹槽 */
-        .cat-img:nth-child(10) { left: 255px; top: 40px; animation-delay: 2.4s; }
-        
-        /* 左侧收窄 */
-        .cat-img:nth-child(11) { left: 40px; top: 250px; animation-delay: 2.7s; }
-        .cat-img:nth-child(12) { left: 70px; top: 330px; animation-delay: 3.0s; }
-        .cat-img:nth-child(13) { left: 120px; top: 400px; animation-delay: 3.3s; }
-        
-        /* 右侧收窄 */
-        .cat-img:nth-child(14) { left: 470px; top: 250px; animation-delay: 3.6s; }
-        .cat-img:nth-child(15) { left: 440px; top: 330px; animation-delay: 3.9s; }
-        .cat-img:nth-child(16) { left: 390px; top: 400px; animation-delay: 4.2s; }
-        
-        /* 底部尖端 - 爱心尖尖 */
-        .cat-img:nth-child(17) { left: 180px; top: 460px; animation-delay: 4.5s; }
-        .cat-img:nth-child(18) { left: 330px; top: 460px; animation-delay: 4.8s; }
-        .cat-img:nth-child(19) { left: 255px; top: 500px; animation-delay: 5.1s; }
-        
-        @keyframes float {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-        }
-        
-        .blessing {
-            font-size: 1.5rem;
-            color: #FFD700;
+        .arrow {
+            font-size: 3rem;
+            color: #ffd700;
             margin: 20px 0;
-            text-align: center;
+            animation: bounce 2s ease-in-out infinite;
         }
         
-        .scroll-text {
-            font-size: 1.2rem;
-            color: #FFD700;
-            white-space: nowrap;
-            overflow: hidden;
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(10px); }
+        }
+        
+        /* 祝福语滚动 */
+        .blessing-scroll {
             width: 100%;
-            max-width: 600px;
-            border: 2px solid #FFD700;
-            border-radius: 10px;
-            padding: 15px;
-            margin: 20px 0;
-            position: relative;
+            overflow: hidden;
+            background: rgba(255, 215, 0, 0.1);
+            padding: 15px 0;
+            margin: 30px 0;
+            border-top: 2px solid rgba(255, 215, 0, 0.3);
+            border-bottom: 2px solid rgba(255, 215, 0, 0.3);
         }
         
-        .scroll-content {
+        .blessing-text {
             display: inline-block;
-            padding-left: 100%;
-            animation: scroll 30s linear infinite;
+            white-space: nowrap;
+            animation: scroll-left 30s linear infinite;
+            font-size: clamp(14px, 3vw, 18px);
         }
         
-        @keyframes scroll {
-            0% { transform: translateX(0); }
-            100% { transform: translateX(-100%); }
+        @keyframes scroll-left {
+            from { transform: translateX(100%); }
+            to { transform: translateX(-100%); }
         }
         
+        /* 倒计时 */
         .countdown {
             text-align: center;
             margin: 30px 0;
         }
         
-        .countdown-title {
-            font-size: 2rem;
-            color: #FFD700;
+        .countdown h2 {
+            font-size: clamp(18px, 4vw, 24px);
             margin-bottom: 20px;
+            color: #ffd700;
         }
         
-        .countdown-time {
+        .time-display {
             display: flex;
             gap: 10px;
             justify-content: center;
-            align-items: center;
-            font-size: 3rem;
-            font-weight: bold;
-            color: #FFD700;
+            flex-wrap: wrap;
         }
         
         .time-unit {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
+            background: rgba(255, 215, 0, 0.1);
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            border-radius: 10px;
+            padding: 15px;
+            min-width: 70px;
         }
         
         .time-value {
-            font-size: 4rem;
-            text-shadow: 0 0 20px rgba(255, 215, 0, 0.8);
+            font-size: clamp(24px, 6vw, 36px);
+            font-weight: bold;
+            color: #ffd700;
         }
         
         .time-label {
-            font-size: 1rem;
+            font-size: clamp(12px, 2.5vw, 14px);
+            color: #aaa;
             margin-top: 5px;
         }
         
-        .hint {
-            font-size: 1.2rem;
-            color: #FFD700;
-            text-align: center;
-            margin-top: 30px;
-            animation: pulse 2s infinite;
-        }
-        
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-        
-        .music-control {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 1000;
-            background: rgba(255, 215, 0, 0.2);
-            border: 2px solid #FFD700;
-            border-radius: 50%;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            backdrop-filter: blur(10px);
-        }
-        
-        .music-control:hover {
-            background: rgba(255, 215, 0, 0.4);
-            transform: scale(1.1);
-        }
-        
-        .music-control:active {
-            transform: scale(0.95);
-        }
-        
-        .music-icon {
-            font-size: 2rem;
-            animation: rotate 4s linear infinite;
-        }
-        
-        .music-icon.paused {
-            animation: none;
-        }
-        
-        @keyframes rotate {
-            from { transform: rotate(0deg); }
-            to { transform: rotate(360deg); }
+        /* 猫咪爱心 - 响应式布局 */
+        .cats-heart {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            height: 500px;
+            margin: 40px auto;
         }
         
         @media (max-width: 768px) {
-            .year { font-size: 4rem; }
-            .arrow { font-size: 3rem; }
-            .cats { 
-                width: 90vw; 
-                height: 450px;
-                transform: scale(0.8);
+            .cats-heart {
+                height: 400px;
+                max-width: 90vw;
             }
-            .cat-img { width: 70px; height: 70px; }
-            .blessing { font-size: 1.2rem; }
-            .scroll-text { font-size: 1rem; }
-            .countdown-title { font-size: 1.5rem; }
-            .time-value { font-size: 2.5rem; }
+        }
+        
+        .cat-img {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            object-position: center 30%;
+            border: 3px solid gold;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+            animation: float 3s ease-in-out infinite;
+            transition: transform 0.3s;
+        }
+        
+        @media (max-width: 768px) {
+            .cat-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+        
+        .cat-img:hover {
+            transform: scale(1.2);
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        /* 主人照片 */
+        .owner-img {
+            position: absolute;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid gold;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.8);
+            animation: glow-pulse 2s ease-in-out infinite;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+        }
+        
+        @media (max-width: 768px) {
+            .owner-img {
+                width: 90px;
+                height: 90px;
+            }
+        }
+        
+        @keyframes glow-pulse {
+            0%, 100% { box-shadow: 0 0 30px rgba(255, 215, 0, 0.8); }
+            50% { box-shadow: 0 0 50px rgba(255, 215, 0, 1); }
+        }
+        
+        /* 提示文字 */
+        .hint {
+            text-align: center;
+            font-size: clamp(14px, 3vw, 18px);
+            color: #aaa;
+            margin-top: 40px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.5; }
+            50% { opacity: 1; }
         }
     </style>
 </head>
 <body>
     <canvas id="canvas"></canvas>
     
-    <!-- 音乐控制按钮 -->
-    <div class="music-control" id="musicControl" onclick="toggleMusic(event)">
-        <div class="music-icon" id="musicIcon">🎵</div>
-    </div>
-    
-    <!-- 背景音乐 -->
+    <!-- 音乐控制 -->
+    <div id="musicControl">🎵</div>
+    <div id="musicStatus"></div>
     <audio id="bgMusic" loop>
         <source src="haohao.mp3" type="audio/mpeg">
     </audio>
     
-    <div class="container" onclick="createFirework(event)">
+    <div class="container">
         <div class="year-transition">
-            <div class="year year-2025">2025</div>
+            <div class="year old">2025</div>
             <div class="arrow">↓</div>
-            <div class="year year-2026">2026</div>
+            <div class="year new">2026</div>
         </div>
         
-        <div class="cats">
-        <img src="owner.jpg" alt="主人" class="owner-img">
-            <img src="cat1.jpg" alt="猫咪1" class="cat-img">
-            <img src="cat2.jpg" alt="猫咪2" class="cat-img">
-            <img src="cat3.jpg" alt="猫咪3" class="cat-img">
-            <img src="cat4.jpg" alt="猫咪4" class="cat-img">
-            <img src="cat5.jpg" alt="猫咪5" class="cat-img">
-            <img src="cat6.jpg" alt="猫咪6" class="cat-img">
-            <img src="cat7.jpg" alt="猫咪7" class="cat-img">
-            <img src="cat8.jpg" alt="猫咪8" class="cat-img">
-            <img src="cat9.jpg" alt="猫咪9" class="cat-img">
-            <img src="cat10.jpg" alt="猫咪10" class="cat-img">
-            <img src="cat11.jpg" alt="猫咪11" class="cat-img">
-            <img src="cat12.jpg" alt="猫咪12" class="cat-img">
-            <img src="cat13.jpg" alt="猫咪13" class="cat-img">
-            <img src="cat14.jpg" alt="猫咪14" class="cat-img">
-            <img src="cat15.jpg" alt="猫咪15" class="cat-img">
-            <img src="cat16.jpg" alt="猫咪16" class="cat-img">
-            <img src="cat17.jpg" alt="猫咪17" class="cat-img">
-            <img src="cat18.jpg" alt="猫咪18" class="cat-img">
-        </div>
-        
-        <div class="blessing">大猫携犬子们祝您：</div>
-        
-        <div class="scroll-text">
-            <div class="scroll-content">
-                新年快乐 🎊 · 万事如意 ✨ · 恭喜发财 💰 · 心想事成 🌟 · 阖家欢乐 🏮 · 步步高升 🎯 · 身体健康 💪 · 工作顺利 📈 · 学业进步 📚 · 财源广进 💵 · 福星高照 ⭐ · 吉祥如意 🎐 · 龙马精神 🐉 · 前程似锦 🌈 · 事业有成 🏆 · 平安喜乐 🕊️ · 笑口常开 😄 · 好运连连 🍀 · 幸福美满 💝 · 岁岁平安 🎋
+        <div class="blessing-scroll">
+            <div class="blessing-text">
+                大猫携犬子们祝您：新年快乐 🎊 · 万事如意 ✨ · 恭喜发财 💰 · 心想事成 🌟 · 阖家欢乐 🏮 · 步步高升 🎯 · 身体健康 💪 · 工作顺利 📈 · 学业进步 📚 · 财源广进 💵 · 福星高照 ⭐ · 吉祥如意 🎐 · 龙马精神 🐉 · 前程似锦 🌈 · 事业有成 🏆 · 平安喜乐 🕊️ · 笑口常开 😄 · 好运连连 🍀 · 幸福美满 💝 · 岁岁平安 🎋
             </div>
         </div>
         
         <div class="countdown">
-            <div class="countdown-title">离2026年还有</div>
-            <div class="countdown-time" id="countdown">
+            <h2 style="color: #ff6b6b; font-size: clamp(20px, 5vw, 28px); margin-bottom: 10px;">🎉 2026年已经到来！新年快乐！🎊</h2>
+            <h2>距离2026年春节还有</h2>
+            <div class="time-display">
                 <div class="time-unit">
                     <div class="time-value" id="days">0</div>
                     <div class="time-label">天</div>
                 </div>
-                <div>:</div>
                 <div class="time-unit">
                     <div class="time-value" id="hours">00</div>
                     <div class="time-label">时</div>
                 </div>
-                <div>:</div>
                 <div class="time-unit">
                     <div class="time-value" id="minutes">00</div>
                     <div class="time-label">分</div>
                 </div>
-                <div>:</div>
                 <div class="time-unit">
                     <div class="time-value" id="seconds">00</div>
                     <div class="time-label">秒</div>
@@ -368,11 +324,36 @@
             </div>
         </div>
         
+        <div class="cats-heart">
+            <!-- 主人照片在中心 -->
+            <img src="owner.jpg" alt="主人" class="owner-img">
+            
+            <!-- 18只猫咪排列成爱心 -->
+            <img src="cat1.jpg" alt="猫咪1" class="cat-img" style="left: 15%; top: 5%; animation-delay: 0s;">
+            <img src="cat2.jpg" alt="猫咪2" class="cat-img" style="left: 25%; top: 2%; animation-delay: 0.1s;">
+            <img src="cat3.jpg" alt="猫咪3" class="cat-img" style="left: 37%; top: 0%; animation-delay: 0.2s;">
+            <img src="cat4.jpg" alt="猫咪4" class="cat-img" style="left: 50%; top: 0%; animation-delay: 0.3s;">
+            <img src="cat5.jpg" alt="猫咪5" class="cat-img" style="left: 63%; top: 0%; animation-delay: 0.4s;">
+            <img src="cat6.jpg" alt="猫咪6" class="cat-img" style="left: 75%; top: 2%; animation-delay: 0.5s;">
+            <img src="cat7.jpg" alt="猫咪7" class="cat-img" style="left: 85%; top: 5%; animation-delay: 0.6s;">
+            <img src="cat8.jpg" alt="猫咪8" class="cat-img" style="left: 5%; top: 20%; animation-delay: 0.7s;">
+            <img src="cat9.jpg" alt="猫咪9" class="cat-img" style="left: 92%; top: 20%; animation-delay: 0.8s;">
+            <img src="cat10.jpg" alt="猫咪10" class="cat-img" style="left: 0%; top: 40%; animation-delay: 0.9s;">
+            <img src="cat11.jpg" alt="猫咪11" class="cat-img" style="left: 95%; top: 40%; animation-delay: 1s;">
+            <img src="cat12.jpg" alt="猫咪12" class="cat-img" style="left: 5%; top: 60%; animation-delay: 1.1s;">
+            <img src="cat13.jpg" alt="猫咪13" class="cat-img" style="left: 90%; top: 60%; animation-delay: 1.2s;">
+            <img src="cat14.jpg" alt="猫咪14" class="cat-img" style="left: 15%; top: 75%; animation-delay: 1.3s;">
+            <img src="cat15.jpg" alt="猫咪15" class="cat-img" style="left: 82%; top: 75%; animation-delay: 1.4s;">
+            <img src="cat16.jpg" alt="猫咪16" class="cat-img" style="left: 30%; top: 85%; animation-delay: 1.5s;">
+            <img src="cat17.jpg" alt="猫咪17" class="cat-img" style="left: 68%; top: 85%; animation-delay: 1.6s;">
+            <img src="cat18.jpg" alt="猫咪18" class="cat-img" style="left: 50%; top: 92%; animation-delay: 1.7s;">
+        </div>
+        
         <div class="hint">点击屏幕放烟花 🎆</div>
     </div>
     
     <script>
-        // Canvas设置
+        // 烟花效果
         const canvas = document.getElementById('canvas');
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
@@ -383,91 +364,88 @@
             canvas.height = window.innerHeight;
         });
         
-        // 烟花数组
-        const fireworks = [];
-        
-        // 烟花颜色
-        const colors = ['#FF6B6B', '#FFA500', '#FFD700', '#90EE90', '#87CEEB', '#DDA0DD', '#FF69B4', '#00CED1'];
-        
-        // 粒子类
         class Particle {
             constructor(x, y, color) {
                 this.x = x;
                 this.y = y;
                 this.color = color;
-                const angle = Math.random() * Math.PI * 2;
-                const speed = Math.random() * 8 + 4;
-                this.vx = Math.cos(angle) * speed;
-                this.vy = Math.sin(angle) * speed;
-                this.life = 1;
-                this.decay = Math.random() * 0.01 + 0.005;
-                this.size = Math.random() * 6 + 4;
-            }
-            
-            update() {
-                this.x += this.vx;
-                this.y += this.vy;
-                this.vy += 0.08;
-                this.life -= this.decay;
+                this.velocity = {
+                    x: (Math.random() - 0.5) * 8,
+                    y: (Math.random() - 0.5) * 8
+                };
+                this.alpha = 1;
+                this.decay = Math.random() * 0.015 + 0.015;
             }
             
             draw() {
                 ctx.save();
-                ctx.globalAlpha = this.life;
+                ctx.globalAlpha = this.alpha;
                 ctx.fillStyle = this.color;
-                ctx.shadowBlur = 30;
-                ctx.shadowColor = this.color;
                 ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
                 ctx.fill();
                 ctx.restore();
             }
+            
+            update() {
+                this.velocity.y += 0.1;
+                this.x += this.velocity.x;
+                this.y += this.velocity.y;
+                this.alpha -= this.decay;
+            }
         }
         
-        // 创建烟花
-        function createFirework(e) {
-            const x = e.clientX || e.touches?.[0]?.clientX || Math.random() * canvas.width;
-            const y = e.clientY || e.touches?.[0]?.clientY || Math.random() * canvas.height;
+        let particles = [];
+        
+        function createFirework(x, y) {
+            const colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff', '#ffd700'];
             const color = colors[Math.floor(Math.random() * colors.length)];
             
-            for (let i = 0; i < 60; i++) {
-                fireworks.push(new Particle(x, y, color));
+            for (let i = 0; i < 100; i++) {
+                particles.push(new Particle(x, y, color));
             }
         }
         
-        // 动画循环
         function animate() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = 'rgba(10, 14, 39, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
             
-            for (let i = fireworks.length - 1; i >= 0; i--) {
-                fireworks[i].update();
-                fireworks[i].draw();
-                
-                if (fireworks[i].life <= 0) {
-                    fireworks.splice(i, 1);
-                }
-            }
+            particles = particles.filter(particle => particle.alpha > 0);
+            
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
             
             requestAnimationFrame(animate);
         }
         
         animate();
         
+        document.addEventListener('click', (e) => {
+            if (e.target.id !== 'musicControl') {
+                createFirework(e.clientX, e.clientY);
+            }
+        });
+        
         // 倒计时
         function updateCountdown() {
-            const now = new Date().getTime();
-            const target = new Date('2026-01-01T00:00:00+08:00').getTime();
-            const distance = target - now;
+            const now = new Date();
+            const target = new Date('2026-01-29T00:00:00');
+            const diff = target - now;
             
-            if (distance < 0) {
-                document.getElementById('countdown').innerHTML = '<div class="time-value">🎉 新年快乐！🎉</div>';
+            if (diff <= 0) {
+                document.getElementById('days').textContent = '0';
+                document.getElementById('hours').textContent = '00';
+                document.getElementById('minutes').textContent = '00';
+                document.getElementById('seconds').textContent = '00';
                 return;
             }
             
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
             
             document.getElementById('days').textContent = days;
             document.getElementById('hours').textContent = String(hours).padStart(2, '0');
@@ -475,69 +453,63 @@
             document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
         }
         
-        // 启动倒计时
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 触摸支持
-        document.addEventListener('touchstart', createFirework);
-        
-         <script>
-        // 添加加载提示
-        const loadingDiv = document.createElement('div');
-        loadingDiv.id = 'musicLoading';
-        loadingDiv.style.cssText = 'position: fixed; top: 70px; right: 20px; background: rgba(255,215,0,0.9); color: #1a1a2e; padding: 10px 15px; border-radius: 20px; font-size: 14px; z-index: 10001; display: none;';
-        loadingDiv.textContent = '🎵 音乐加载中...';
-        document.body.appendChild(loadingDiv);
-        
-        const music = document.getElementById('bgMusic');        const musicControl = document.getElementById('musicControl');
-        const musicLoading = document.getElementById('musicLoading');
+        // 音乐控制
+        const musicControl = document.getElementById('musicControl');
+        const bgMusic = document.getElementById('bgMusic');
+        const musicStatus = document.getElementById('musicStatus');
         let isPlaying = false;
         
-        // 显示加载提示
-        musicLoading.style.display = 'block';
-        
-        // 音乐加载完成
-        music.addEventListener('canplaythrough', () => {
-            musicLoading.textContent = '✅ 音乐已加载';
+        function showStatus(text, duration = 2000) {
+            musicStatus.textContent = text;
+            musicStatus.classList.add('show');
             setTimeout(() => {
-                musicLoading.style.display = 'none';
-            }, 2000);
-        });
-        
-        // 音乐加载出错
-        music.addEventListener('error', () => {
-            musicLoading.textContent = '❌ 音乐加载失败';
-            setTimeout(() => {
-                musicLoading.style.display = 'none';
-            }, 3000);
-        });    
-        function toggleMusic(e) {
-            e.stopPropagation();
-            
-            if (isPlaying) {
-                bgMusic.pause();
-                musicIcon.textContent = '🎵';
-                musicIcon.classList.add('paused');
-            } else {
-                bgMusic.play().catch(err => {
-                    console.log('音乐播放需要用户交互');
-                });
-                musicIcon.textContent = '🎶';
-                musicIcon.classList.remove('paused');
-            }
-            
-            isPlaying = !isPlaying;
+                musicStatus.classList.remove('show');
+            }, duration);
         }
         
-        // 自动播放（某些浏览器可能会阻止）
+        // 音乐加载状态
+        bgMusic.addEventListener('loadstart', () => {
+            showStatus('🎵 音乐加载中...', 3000);
+        });
+        
+        bgMusic.addEventListener('canplaythrough', () => {
+            showStatus('✅ 音乐已加载');
+        });
+        
+        bgMusic.addEventListener('error', () => {
+            showStatus('❌ 音乐加载失败', 3000);
+        });
+        
+        musicControl.addEventListener('click', () => {
+            if (isPlaying) {
+                bgMusic.pause();
+                musicControl.textContent = '🎵';
+                musicControl.classList.remove('playing');
+                isPlaying = false;
+            } else {
+                bgMusic.play().then(() => {
+                    musicControl.textContent = '🎶';
+                    musicControl.classList.add('playing');
+                    isPlaying = true;
+                }).catch(err => {
+                    console.error('播放失败:', err);
+                    showStatus('❌ 播放失败，请重试', 3000);
+                });
+            }
+        });
+        
+        // 尝试自动播放（某些浏览器可能阻止）
         window.addEventListener('load', () => {
             bgMusic.play().then(() => {
+                musicControl.textContent = '🎶';
+                musicControl.classList.add('playing');
                 isPlaying = true;
-                musicIcon.textContent = '🎶';
-                musicIcon.classList.remove('paused');
             }).catch(() => {
-                console.log('自动播放被阻止，请点击音乐按钮播放');
+                // 自动播放被阻止，用户需要手动点击
+                console.log('自动播放被阻止，请点击音乐按钮');
             });
         });
     </script>
