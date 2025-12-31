@@ -482,11 +482,36 @@
         // 触摸支持
         document.addEventListener('touchstart', createFirework);
         
-        // 音乐控制
-        const bgMusic = document.getElementById('bgMusic');
-        const musicIcon = document.getElementById('musicIcon');
+         <script>
+        // 添加加载提示
+        const loadingDiv = document.createElement('div');
+        loadingDiv.id = 'musicLoading';
+        loadingDiv.style.cssText = 'position: fixed; top: 70px; right: 20px; background: rgba(255,215,0,0.9); color: #1a1a2e; padding: 10px 15px; border-radius: 20px; font-size: 14px; z-index: 10001; display: none;';
+        loadingDiv.textContent = '🎵 音乐加载中...';
+        document.body.appendChild(loadingDiv);
+        
+        const music = document.getElementById('bgMusic');        const musicControl = document.getElementById('musicControl');
+        const musicLoading = document.getElementById('musicLoading');
         let isPlaying = false;
         
+        // 显示加载提示
+        musicLoading.style.display = 'block';
+        
+        // 音乐加载完成
+        music.addEventListener('canplaythrough', () => {
+            musicLoading.textContent = '✅ 音乐已加载';
+            setTimeout(() => {
+                musicLoading.style.display = 'none';
+            }, 2000);
+        });
+        
+        // 音乐加载出错
+        music.addEventListener('error', () => {
+            musicLoading.textContent = '❌ 音乐加载失败';
+            setTimeout(() => {
+                musicLoading.style.display = 'none';
+            }, 3000);
+        });    
         function toggleMusic(e) {
             e.stopPropagation();
             
