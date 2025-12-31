@@ -207,7 +207,7 @@
         .owner-photo {
             position: absolute;
             left: 50%;
-            top: 50%;
+            top: 45%;
             transform: translate(-50%, -50%);
             width: clamp(80px, 12vw, 120px);
             height: clamp(80px, 12vw, 120px);
@@ -478,29 +478,29 @@
         const catsContainer = document.getElementById('catsContainer');
         const catPositions = [
             // 左上弧线（爱心左半边）
-            { left: '25%', top: '8%' },
-            { left: '18%', top: '15%' },
-            { left: '15%', top: '25%' },
-            { left: '15%', top: '35%' },
+            { left: '25%', top: '5%' },
+            { left: '18%', top: '12%' },
+            { left: '12%', top: '22%' },
+            { left: '10%', top: '32%' },
             // 右上弧线（爱心右半边）
-            { left: '75%', top: '8%' },
-            { left: '82%', top: '15%' },
-            { left: '85%', top: '25%' },
-            { left: '85%', top: '35%' },
-            // 左侧向下
-            { left: '18%', top: '45%' },
-            { left: '22%', top: '55%' },
-            { left: '28%', top: '65%' },
-            // 右侧向下
-            { left: '82%', top: '45%' },
-            { left: '78%', top: '55%' },
-            { left: '72%', top: '65%' },
-            // 底部尖角（收拢）
-            { left: '35%', top: '75%' },
-            { left: '42%', top: '83%' },
-            { left: '50%', top: '88%' },
-            { left: '58%', top: '83%' },
-            { left: '65%', top: '75%' }
+            { left: '75%', top: '5%' },
+            { left: '82%', top: '12%' },
+            { left: '88%', top: '22%' },
+            { left: '90%', top: '32%' },
+            // 左侧向下收拢
+            { left: '12%', top: '45%' },
+            { left: '18%', top: '58%' },
+            { left: '28%', top: '70%' },
+            // 右侧向下收拢
+            { left: '88%', top: '45%' },
+            { left: '82%', top: '58%' },
+            { left: '72%', top: '70%' },
+            // 底部尖角（逐渐收口到一点）
+            { left: '38%', top: '80%' },
+            { left: '44%', top: '87%' },
+            { left: '50%', top: '92%' },
+            { left: '56%', top: '87%' },
+            { left: '62%', top: '80%' }
         ];
         
         for (let i = 1; i <= 18; i++) {
