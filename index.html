@@ -207,15 +207,15 @@
         .owner-photo {
             position: absolute;
             left: 50%;
-            top: 45%;
+            top: 48%;
             transform: translate(-50%, -50%);
-            width: clamp(80px, 12vw, 120px);
-            height: clamp(80px, 12vw, 120px);
+            width: clamp(90px, 13vw, 130px);
+            height: clamp(90px, 13vw, 130px);
             border-radius: 50%;
             border: 3px solid gold;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
             object-fit: cover;
-            z-index: 5;
+            z-index: 100;
             animation: glow 2s ease-in-out infinite;
         }
         
@@ -474,40 +474,48 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 使用心形曲线数学公式生成完美爱心坐标
+        // 18只猫咪精心设计的爱心形状（简洁清晰，不重叠）
         const catsContainer = document.getElementById('catsContainer');
-        const catPositions = [];
+        const catPositions = [
+            // 顶部左弧（3只）
+            { left: '25%', top: '12%' },
+            { left: '18%', top: '18%' },
+            { left: '13%', top: '28%' },
+            
+            // 顶部右弧（3只）
+            { left: '75%', top: '12%' },
+            { left: '82%', top: '18%' },
+            { left: '87%', top: '28%' },
+            
+            // 左侧（4只）
+            { left: '10%', top: '40%' },
+            { left: '12%', top: '52%' },
+            { left: '18%', top: '64%' },
+            { left: '26%', top: '74%' },
+            
+            // 右侧（4只）
+            { left: '90%', top: '40%' },
+            { left: '88%', top: '52%' },
+            { left: '82%', top: '64%' },
+            { left: '74%', top: '74%' },
+            
+            // 底部（4只）
+            { left: '36%', top: '82%' },
+            { left: '44%', top: '88%' },
+            { left: '56%', top: '88%' },
+            { left: '64%', top: '82%' }
+        ];
         
-        // 心形曲线公式: x = 16*sin^3(t), y = 13*cos(t) - 5*cos(2t) - 2*cos(3t) - cos(4t)
-        const numCats = 30;  // 生成30个位置
-        for (let i = 0; i < numCats; i++) {
-            const t = (i / numCats) * Math.PI * 2;  // 角度从0到2π
-            
-            // 计算心形曲线坐标
-            const x = 16 * Math.pow(Math.sin(t), 3);
-            const y = -(13 * Math.cos(t) - 5 * Math.cos(2*t) - 2 * Math.cos(3*t) - Math.cos(4*t));
-            
-            // 转换为百分比坐标（居中并缩放）
-            const left = 50 + x * 2.2;  // 以50%为中心，缩放2.2倍
-            const top = 50 + y * 2.2;   // 以50%为中心，缩放2.2倍
-            
-            catPositions.push({
-                left: `${left}%`,
-                top: `${top}%`
-            });
-        }
-        
-        // 使用18张照片循环填充30个位置
-        for (let i = 0; i < catPositions.length; i++) {
+        // 生成18只猫咪
+        for (let i = 0; i < 18; i++) {
             const cat = document.createElement('img');
-            const catIndex = (i % 18) + 1;  // 循环使用1-18
-            cat.src = `cat${catIndex}.jpg`;
-            cat.alt = `猫咪${catIndex}`;
+            cat.src = `cat${i + 1}.jpg`;
+            cat.alt = `猫咪${i + 1}`;
             cat.className = 'cat';
             const pos = catPositions[i];
             cat.style.left = pos.left;
             cat.style.top = pos.top;
-            cat.style.animationDelay = `${i * 0.05}s`;
+            cat.style.animationDelay = `${i * 0.1}s`;
             catsContainer.appendChild(cat);
         }
     </script>
