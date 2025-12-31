@@ -474,33 +474,33 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 猫咪爱心排列（18只猫咪完美爱心）
+        // 猫咪爱心排列（18只猫咪真正的爱心形状）
         const catsContainer = document.getElementById('catsContainer');
         const catPositions = [
-            // 顶部弧线（左到右）
-            { left: '20%', top: '10%' },
-            { left: '30%', top: '5%' },
-            { left: '40%', top: '3%' },
-            { left: '50%', top: '2%' },
-            { left: '60%', top: '3%' },
-            { left: '70%', top: '5%' },
-            { left: '80%', top: '10%' },
-            // 左侧弧线
-            { left: '12%', top: '25%' },
-            { left: '8%', top: '40%' },
-            { left: '12%', top: '55%' },
-            // 右侧弧线
-            { left: '88%', top: '25%' },
-            { left: '92%', top: '40%' },
-            { left: '88%', top: '55%' },
-            // 底部尖角
-            { left: '22%', top: '70%' },
-            { left: '35%', top: '80%' },
-            { left: '43%', top: '88%' },
-            { left: '50%', top: '92%' },
-            { left: '57%', top: '88%' },
-            { left: '65%', top: '80%' },
-            { left: '78%', top: '70%' }
+            // 左上弧线（爱心左半边）
+            { left: '25%', top: '8%' },
+            { left: '18%', top: '15%' },
+            { left: '15%', top: '25%' },
+            { left: '15%', top: '35%' },
+            // 右上弧线（爱心右半边）
+            { left: '75%', top: '8%' },
+            { left: '82%', top: '15%' },
+            { left: '85%', top: '25%' },
+            { left: '85%', top: '35%' },
+            // 左侧向下
+            { left: '18%', top: '45%' },
+            { left: '22%', top: '55%' },
+            { left: '28%', top: '65%' },
+            // 右侧向下
+            { left: '82%', top: '45%' },
+            { left: '78%', top: '55%' },
+            { left: '72%', top: '65%' },
+            // 底部尖角（收拢）
+            { left: '35%', top: '75%' },
+            { left: '42%', top: '83%' },
+            { left: '50%', top: '88%' },
+            { left: '58%', top: '83%' },
+            { left: '65%', top: '75%' }
         ];
         
         for (let i = 1; i <= 18; i++) {
