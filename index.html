@@ -474,44 +474,61 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 猫咪爱心排列（18只猫咪完美爱心形状）
+        // 猫咪爱心排列（照片可重复使用，形成完美爱心形状）
         const catsContainer = document.getElementById('catsContainer');
         const catPositions = [
-            // 左上圆弧（爱心左半边，向内弯曲）
-            { left: '30%', top: '8%' },   // 左弧顶点
-            { left: '22%', top: '10%' },  // 左弧外侧
-            { left: '15%', top: '18%' },  // 左弧中部
-            { left: '10%', top: '30%' },  // 左弧底部
-            { left: '8%', top: '42%' },   // 左侧最外
-            // 右上圆弧（爱心右半边，向内弯曲）
-            { left: '70%', top: '8%' },   // 右弧顶点
-            { left: '78%', top: '10%' },  // 右弧外侧
-            { left: '85%', top: '18%' },  // 右弧中部
-            { left: '90%', top: '30%' },  // 右弧底部
-            { left: '92%', top: '42%' },  // 右侧最外
-            // 左侧向下收拢
-            { left: '12%', top: '55%' },
+            // 左上圆弧（爱心左半边）- 8个位置
+            { left: '32%', top: '5%' },   // 左弧顶点
+            { left: '28%', top: '7%' },
+            { left: '23%', top: '10%' },
+            { left: '18%', top: '14%' },
+            { left: '14%', top: '20%' },
+            { left: '11%', top: '28%' },
+            { left: '9%', top: '36%' },
+            { left: '8%', top: '44%' },   // 左侧最宽点
+            
+            // 右上圆弧（爱心右半边）- 8个位置
+            { left: '68%', top: '5%' },   // 右弧顶点
+            { left: '72%', top: '7%' },
+            { left: '77%', top: '10%' },
+            { left: '82%', top: '14%' },
+            { left: '86%', top: '20%' },
+            { left: '89%', top: '28%' },
+            { left: '91%', top: '36%' },
+            { left: '92%', top: '44%' },  // 右侧最宽点
+            
+            // 左侧向下收拢 - 5个位置
+            { left: '10%', top: '52%' },
+            { left: '14%', top: '60%' },
             { left: '20%', top: '68%' },
-            { left: '30%', top: '78%' },
-            // 右侧向下收拢
-            { left: '88%', top: '55%' },
+            { left: '27%', top: '76%' },
+            { left: '35%', top: '83%' },
+            
+            // 右侧向下收拢 - 5个位置
+            { left: '90%', top: '52%' },
+            { left: '86%', top: '60%' },
             { left: '80%', top: '68%' },
-            { left: '70%', top: '78%' },
-            // 底部尖角（逐渐收口到一点）
-            { left: '42%', top: '86%' },
-            { left: '50%', top: '92%' },  // 最底部尖点
-            { left: '58%', top: '86%' }
+            { left: '73%', top: '76%' },
+            { left: '65%', top: '83%' },
+            
+            // 底部尖角 - 4个位置
+            { left: '43%', top: '88%' },
+            { left: '48%', top: '92%' },
+            { left: '52%', top: '92%' },
+            { left: '57%', top: '88%' }
         ];
         
-        for (let i = 1; i <= 18; i++) {
+        // 使用18张照片循环填充30个位置
+        for (let i = 0; i < catPositions.length; i++) {
             const cat = document.createElement('img');
-            cat.src = `cat${i}.jpg`;
-            cat.alt = `猫咪${i}`;
+            const catIndex = (i % 18) + 1;  // 循环使用1-18
+            cat.src = `cat${catIndex}.jpg`;
+            cat.alt = `猫咪${catIndex}`;
             cat.className = 'cat';
-            const pos = catPositions[i - 1];
+            const pos = catPositions[i];
             cat.style.left = pos.left;
             cat.style.top = pos.top;
-            cat.style.animationDelay = `${i * 0.1}s`;
+            cat.style.animationDelay = `${i * 0.05}s`;
             catsContainer.appendChild(cat);
         }
     </script>
