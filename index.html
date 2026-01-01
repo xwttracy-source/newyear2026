@@ -495,19 +495,6 @@
             });
         }
         
-        // 添加调试标记：圆圈中心点
-        const centerMark = document.createElement('div');
-        centerMark.style.position = 'absolute';
-        centerMark.style.left = '50%';
-        centerMark.style.top = '50%';
-        centerMark.style.width = '10px';
-        centerMark.style.height = '10px';
-        centerMark.style.backgroundColor = 'red';
-        centerMark.style.borderRadius = '50%';
-        centerMark.style.transform = 'translate(-50%, -50%)';
-        centerMark.style.zIndex = '200';
-        catsContainer.appendChild(centerMark);
-        
         // 生成18只猫咪
         for (let i = 0; i < 18; i++) {
             const cat = document.createElement('img');
