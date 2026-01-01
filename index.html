@@ -210,8 +210,8 @@
             left: 58%;
             top: 54%;
             transform: translate(-50%, -50%);
-            width: clamp(90px, 13vw, 130px);
-            height: clamp(90px, 13vw, 130px);
+            width: clamp(200px, 30vw, 350px);
+            height: clamp(200px, 30vw, 350px);
             border-radius: 50%;
             border: 3px solid gold;
             box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
@@ -400,9 +400,25 @@
         
         animate();
         
+        // 首次点击自动播放音乐
+        let firstClick = true;
         document.addEventListener('click', (e) => {
             if (e.target.id !== 'musicControl') {
                 createFirework(e.clientX, e.clientY);
+                
+                // 首次点击尝试自动播放音乐
+                if (firstClick && !isPlaying) {
+                    firstClick = false;
+                    bgMusic.play().then(() => {
+                        musicControl.textContent = '🎶';
+                        musicControl.classList.add('playing');
+                        isPlaying = true;
+                        showStatus('🎵 音乐已开始播放', 2000);
+                    }).catch(() => {
+                        // 自动播放失败，提示用户手动点击
+                        showStatus('👆 点击右上角按钮播放音乐', 3000);
+                    });
+                }
             }
         });
         
