@@ -474,37 +474,25 @@
         updateCountdown();
         setInterval(updateCountdown, 1000);
         
-        // 18只猫咪精心设计的爱心形状（简洁清晰，不重叠）
+        // 18只猫咪围成完美圆圈（使用数学公式确保均匀分布）
         const catsContainer = document.getElementById('catsContainer');
-        const catPositions = [
-            // 顶部左弧（3只）
-            { left: '25%', top: '12%' },
-            { left: '18%', top: '18%' },
-            { left: '13%', top: '28%' },
+        const catPositions = [];
+        
+        // 使用圆形公式生成18个均匀分布的点
+        const numCats = 18;
+        const radius = 42;  // 圆圈半径（百分比）
+        
+        for (let i = 0; i < numCats; i++) {
+            // 从顶部开始（-90度），顺时针排列
+            const angle = (i / numCats) * 2 * Math.PI - Math.PI / 2;
+            const left = 50 + radius * Math.cos(angle);
+            const top = 50 + radius * Math.sin(angle);
             
-            // 顶部右弧（3只）
-            { left: '75%', top: '12%' },
-            { left: '82%', top: '18%' },
-            { left: '87%', top: '28%' },
-            
-            // 左侧（4只）
-            { left: '10%', top: '40%' },
-            { left: '12%', top: '52%' },
-            { left: '18%', top: '64%' },
-            { left: '26%', top: '74%' },
-            
-            // 右侧（4只）
-            { left: '90%', top: '40%' },
-            { left: '88%', top: '52%' },
-            { left: '82%', top: '64%' },
-            { left: '74%', top: '74%' },
-            
-            // 底部（4只）
-            { left: '36%', top: '82%' },
-            { left: '44%', top: '88%' },
-            { left: '56%', top: '88%' },
-            { left: '64%', top: '82%' }
-        ];
+            catPositions.push({
+                left: `${left}%`,
+                top: `${top}%`
+            });
+        }
         
         // 生成18只猫咪
         for (let i = 0; i < 18; i++) {
